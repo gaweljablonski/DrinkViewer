@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainTheme" parent="@style/TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">50sp</item>
+        <item name="android:textColor">#e0d90e</item>
+    </style>
+</resources>
