@@ -7,7 +7,7 @@
     tools:context="com.example.connectandriod_sql.neww.MainActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/DrinkViewer"
         style="@style/MainTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,10 +27,10 @@
         android:alpha="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
