@@ -27,7 +27,7 @@ public class ConnectionHelper {
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println("Connection failed: " + e.getMessage());
         } finally {
-            // Close the connection in the finally block to ensure it's closed properly
+//             Close the connection in the finally block to ensure it's closed properly
             try {
                 if (connection != null && !connection.isClosed()) {
                     connection.close();
