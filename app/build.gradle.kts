@@ -34,6 +34,7 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(files("D:\\MOJITO PROJECT\\DRINECZKI\\app\\libs\\mysql-connector-j-8.1.0.jar"))
+    implementation(files("libs\\mariadb-java-client-3.2.0.jar"))
     androidTestImplementation(files("D:\\MOJITO PROJECT\\DRINECZKI\\app\\libs\\mysql-connector-j-8.1.0.jar"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
