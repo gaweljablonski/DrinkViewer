@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,10 +18,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        variubles();
     }
 
-    public void GetFromSQL(View view)
+    public String GetFromSQL(View view)
     {
+        String name2 = null;
         try {
             ConnectionHelper connectionHelper = new ConnectionHelper();
             connection = connectionHelper.getConnection();
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // Print retrieved values
                 System.out.println("ID: " + id + ", Name: " + name + ", Salary: " + salary);
+
+                name2 = name;
             }
 
             // Closing resources
@@ -52,5 +57,12 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        return name2;
+    }
+    public void variubles(){
+        TextView pos1 = (TextView) findViewById(R.id.pos1);
+        pos1.setText("test");
+        //pos1.setText(GetFromSQL(null));
     }
 }
