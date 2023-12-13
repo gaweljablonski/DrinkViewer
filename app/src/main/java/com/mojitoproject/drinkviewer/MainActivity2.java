@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,16 +25,32 @@ public class MainActivity2 extends AppCompatActivity {
     private String BaseUrl = "https://mojitoproject.000webhostapp.com/connection_ftp/";
     private RecyclerView recyclerView;
     private ArrayList<ModelClass> modelClasses;
-    private String query;
+    private String query = "";
+    private Button show;
+    private EditText restET;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         modelClasses = new ArrayList<>();
         recyclerView = findViewById(R.id.rv);
+
+        show = (Button) findViewById(R.id.show);
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showButtonFun();
+            }
+        });
         
         displayJson();
         
+    }
+
+    private void showButtonFun() {
+        restET = (EditText) findViewById(R.id.restET);
+        query = restET.getText().toString();
+        displayJson();
     }
 
     private void displayJson() {
@@ -42,7 +61,7 @@ public class MainActivity2 extends AppCompatActivity {
         myApi = retrofit.create(MyApi.class);
 
         //query -> dodatek do zapytania SQL (które można wykorzystać jako sortowanie, filtrowanie etc.)
-        query = "where Percentage=19";
+//        query = "";
 
         Call<ArrayList<ModelClass>> arrayListCall = myApi.fetchData(query);
         arrayListCall.enqueue(new Callback<ArrayList<ModelClass>>() {
