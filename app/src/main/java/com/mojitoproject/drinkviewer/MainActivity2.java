@@ -22,6 +22,7 @@ public class MainActivity2 extends AppCompatActivity {
     private String BaseUrl = "https://mojitoproject.000webhostapp.com/connection_ftp/";
     private RecyclerView recyclerView;
     private ArrayList<ModelClass> modelClasses;
+    private String query;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,11 @@ public class MainActivity2 extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         myApi = retrofit.create(MyApi.class);
-        Call<ArrayList<ModelClass>> arrayListCall = myApi.fetchData();
+
+        //query -> dodatek do zapytania SQL (które można wykorzystać jako sortowanie, filtrowanie etc.)
+        query = "where Percentage=19";
+
+        Call<ArrayList<ModelClass>> arrayListCall = myApi.fetchData(query);
         arrayListCall.enqueue(new Callback<ArrayList<ModelClass>>() {
             @Override
             public void onResponse(Call<ArrayList<ModelClass>> call, Response<ArrayList<ModelClass>> response) {

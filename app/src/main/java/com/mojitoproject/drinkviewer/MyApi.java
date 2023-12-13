@@ -10,17 +10,21 @@ import retrofit2.http.POST;
 
 public interface MyApi {
     @FormUrlEncoded
-    @POST("insert.php")
+    @POST("insert2.php")
     Call<ModelClass>insertData(
             @Field("Name")String Name,
             @Field("Description")String Description,
             @Field("Ingredients")String Ingredients,
-            @Field("Percentage")int Percentage
+            @Field("Percentage")int Percentage,
 
+            @Field("tableName")String TableName
     );
 
-    @GET("select.php")
-    Call<ArrayList<ModelClass>>fetchData();
+    @FormUrlEncoded
+    @POST("select2.php")
+    Call<ArrayList<ModelClass>>fetchData(
+            @Field("rest")String Rest
+    );
 
 
 }

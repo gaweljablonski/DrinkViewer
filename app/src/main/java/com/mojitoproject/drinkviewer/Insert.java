@@ -72,7 +72,7 @@ public class Insert extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             myApi = retrofit.create(MyApi.class);
-            Call<ModelClass> modelClassCall = myApi.insertData(name, description, ingredients, percentage);
+            Call<ModelClass> modelClassCall = myApi.insertData(name, description, ingredients, percentage, "Drineczki");
 
         modelClassCall.enqueue(new Callback<ModelClass>() {
             @Override
