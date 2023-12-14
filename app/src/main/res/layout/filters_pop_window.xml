@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E68AB4D6"
+    android:orientation="vertical"
+
+    tools:context=".FiltersPop">
+
+    <RelativeLayout
+        android:id="@+id/alcochols"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/wodkaCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Wódka"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/ginCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/wodkaCB"
+            android:text="Gin"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/rumCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/ginCB"
+            android:text="Rum"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/tequilaCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/rumCB"
+            android:text="Tequila"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/metaxaCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/wodkaCB"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Metaxa"
+            android:textSize="17dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ingrediences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alcochols"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cukierCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Syrop Cukrowy"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/cytrynyCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/cukierCB"
+            android:text="Cytryny"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/limonkiCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/cytrynyCB"
+            android:text="Limonki"
+            android:textSize="17dp" />
+
+        <CheckBox
+            android:id="@+id/jamCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cukierCB"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Dżemy"
+            android:textSize="17dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ingrediences"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/searchB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SEARCH" />
+
+        <Button
+            android:id="@+id/clearB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchB"
+            android:text="CLEAR" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
