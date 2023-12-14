@@ -31,6 +31,7 @@ public class MainActivity2 extends AppCompatActivity {
     private String query = "";
     private Button show, filters;
     private EditText restET;
+    private QueryClass queryClass = new QueryClass("", "", "", "", "", "", "", "", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +59,35 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
+        restET = (EditText) findViewById(R.id.restET);
+
         // Wyświetla informacje pobrane z DB
         displayJson();
         
     }
+    public void showButtonFunFromPop() {
+        displayJson();
+    }
 
-    public void showButtonFun() {
-        restET = (EditText) findViewById(R.id.restET);
-
+    public void setQueryClassFromFilters(QueryClass qs){
+        queryClass = qs;
+    }
+    private void showButtonFun() {
         query = "WHERE Name = '";
         query = query + restET.getText().toString();
-        query = query + "'";
+        query = query + "' AND ";
+
+        query = query + queryClass.getWodka();
+        query = query + queryClass.getGin();
+        query = query + queryClass.getRum();
+        query = query + queryClass.getTequila();
+        query = query + queryClass.getMetaxa();
+        query = query + queryClass.getCukier();
+        query = query + queryClass.getCytryny();
+        query = query + queryClass.getLimonki();
+        query = query + queryClass.getJam();
+
+        query = query + " percentage like '%%'";
 
         // Check if no view has focus:
         // Hide Keyboard
@@ -82,12 +101,8 @@ public class MainActivity2 extends AppCompatActivity {
 //            throw new RuntimeException(e);
         }
 
-
-//        displayJson();
-    }
-
-    public void setQueryClassFromFilters(QueryClass qs){
-
+        Toast.makeText(MainActivity2.this, query, Toast.LENGTH_LONG).show();
+        displayJson();
     }
 
     private void displayJson() {
@@ -98,7 +113,7 @@ public class MainActivity2 extends AppCompatActivity {
         myApi = retrofit.create(MyApi.class);
 
         //query -> dodatek do zapytania SQL (które można wykorzystać jako sortowanie, filtrowanie etc.)
-        query = "";
+//        query = "";
 
         Call<ArrayList<ModelClass>> arrayListCall = myApi.fetchData(query);
         arrayListCall.enqueue(new Callback<ArrayList<ModelClass>>() {

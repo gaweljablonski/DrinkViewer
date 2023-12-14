@@ -22,75 +22,85 @@ public class QueryClass {
         this.jam = jam;
     }
 
-    public String getWodka() {
-        return wodka;
-    }
-
     public void setWodka(String wodka) {
         this.wodka = wodka;
-    }
-
-    public String getGin() {
-        return gin;
     }
 
     public void setGin(String gin) {
         this.gin = gin;
     }
 
-    public String getRum() {
-        return rum;
-    }
-
     public void setRum(String rum) {
         this.rum = rum;
-    }
-
-    public String getTequila() {
-        return tequila;
     }
 
     public void setTequila(String tequila) {
         this.tequila = tequila;
     }
 
-    public String getMetaxa() {
-        return metaxa;
-    }
-
     public void setMetaxa(String metaxa) {
         this.metaxa = metaxa;
-    }
-
-    public String getCukier() {
-        return cukier;
     }
 
     public void setCukier(String cukier) {
         this.cukier = cukier;
     }
 
-    public String getCytryny() {
-        return cytryny;
-    }
-
     public void setCytryny(String cytryny) {
         this.cytryny = cytryny;
-    }
-
-    public String getLimonki() {
-        return limonki;
     }
 
     public void setLimonki(String limonki) {
         this.limonki = limonki;
     }
 
-    public String getJam() {
-        return jam;
-    }
-
     public void setJam(String jam) {
         this.jam = jam;
+    }
+
+    public String getWodka() {
+        return getterHelper(wodka, "OR");
+    }
+
+    public String getGin() {
+        return getterHelper(gin, "OR");
+    }
+
+    public String getRum() {
+        return getterHelper(rum, "OR");
+    }
+
+    public String getTequila() {
+        return getterHelper(tequila, "OR");
+    }
+
+    public String getMetaxa() {
+        return getterHelper(metaxa, "OR");
+    }
+
+    public String getCukier() {
+        return getterHelper(cukier, "AND");
+    }
+
+    public String getCytryny() {
+        return getterHelper(cytryny, "AND");
+    }
+
+    public String getLimonki() {
+        return getterHelper(limonki, "AND");
+    }
+
+    public String getJam() {
+        return getterHelper(jam, "AND");
+    }
+
+    private String getterHelper(String s, String operator){
+        String query = "Ingredients LIKE '";
+        query = query + s;
+        query = query + "'";
+        query = query + operator;
+        if(s.equals(""))
+            query = "";
+        return query;
     }
 }

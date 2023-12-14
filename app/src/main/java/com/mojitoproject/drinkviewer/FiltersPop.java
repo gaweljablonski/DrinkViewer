@@ -44,8 +44,7 @@ public class FiltersPop extends Activity {
         searchB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mainActivity2.showButtonFun();
+                mainActivity2.showButtonFunFromPop();
             }
         });
 
@@ -61,10 +60,18 @@ public class FiltersPop extends Activity {
                 cytryny = "";
                 limonki = "";
                 jam = "";
+                wodkaCB.setChecked(false);
+                ginCB.setChecked(false);
+                rumCB.setChecked(false);
+                tequilaCB.setChecked(false);
+                metaxaCB.setChecked(false);
+                cukierCB.setChecked(false);
+                cytrynyCB.setChecked(false);
+                limonkiCB.setChecked(false);
+                jamCB.setChecked(false);
             }
         });
-    }
-    private void checkBoxesFun(){
+
         wodkaCB = findViewById(R.id.wodkaCB);
         ginCB = findViewById(R.id.ginCB);
         rumCB = findViewById(R.id.rumCB);
@@ -79,12 +86,109 @@ public class FiltersPop extends Activity {
         wodkaCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                if(isChecked){
+                    wodka = "wodka";
+                }
+                else{
+                    wodka = "";
+                }
+            }
+        });
+        ginCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    gin = "gin";
+                }
+                else{
+                    gin = "";
+                }
+            }
+        });
+        rumCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    rum = "rum";
+                }
+                else{
+                    rum = "";
+                }
+            }
+        });
+        tequilaCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    tequila = "tequila";
+                }
+                else{
+                    tequila = "";
+                }
+            }
+        });
+        metaxaCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    metaxa = "metaxa";
+                }
+                else{
+                    metaxa = "";
+                }
+            }
+        });
+        cukierCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    cukier = "syrop cukrowy";
+                }
+                else{
+                    cukier = "";
+                }
+            }
+        });
+        cytrynyCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    cytryny = "cytryny";
+                }
+                else{
+                    cytryny = "";
+                }
+            }
+        });
+        limonkiCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    limonki = "limonki";
+                }
+                else{
+                    limonki = "";
+                }
+            }
+        });
+        jamCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(jamCB.isChecked()){
+                    jam = "dżem";
+                }
+                else{
+                    jam = "";
+                }
             }
         });
 
 
+
         queryClass = new QueryClass(wodka, gin, rum, tequila, metaxa, cukier, cytryny, limonki, jam);
         mainActivity2.setQueryClassFromFilters(queryClass);
+    }
+    private void checkBoxesFun(){
+
     }
 }
