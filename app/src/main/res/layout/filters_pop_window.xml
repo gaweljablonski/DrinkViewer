@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E68AB4D6"
+    android:background="@color/popupBGcolor"
     android:orientation="vertical"
 
     tools:context=".FiltersPop">
@@ -130,8 +130,8 @@
             android:id="@+id/searchB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:text="SEARCH" />
+            android:visibility="visible"
+            android:text="OK" />
 
         <Button
             android:id="@+id/clearB"

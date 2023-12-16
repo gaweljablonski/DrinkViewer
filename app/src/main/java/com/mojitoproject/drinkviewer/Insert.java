@@ -2,6 +2,7 @@ package com.mojitoproject.drinkviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ public class Insert extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insert);
+
+        Log.wtf("JAJA STAREGOJAJA STAREGOJAJA STAREGOJAJA STAREGOs", "PIJKA");
 
         NameET = (EditText) findViewById(R.id.Name);
         DescriptionET = (EditText) findViewById(R.id.Description);

@@ -2,13 +2,15 @@ package com.mojitoproject.drinkviewer;
 
 import android.widget.CheckBox;
 
+import java.io.Serializable;
+
 /**
  * Klasa do przechowywania danych o szczegółach zapytania
  * Informacje z InltersPop -> MainActivity2
  */
-public class QueryClass {
-    private String wodka, gin, rum, tequila, metaxa;
-    private String cukier, cytryny, limonki, jam;
+public class QueryClass implements Serializable {
+    private String wodka = "", gin = "", rum = "", tequila = "", metaxa = "";
+    private String cukier = "", cytryny = "", limonki = "", jam = "";
 
     public QueryClass(String wodka, String gin, String rum, String tequila, String metaxa, String cukier, String cytryny, String limonki, String jam) {
         this.wodka = wodka;
@@ -59,6 +61,7 @@ public class QueryClass {
     }
 
     public String getWodka() {
+//        return wodka.equals("") ? "1" : "9";
         return getterHelper(wodka, "OR");
     }
 
@@ -95,12 +98,15 @@ public class QueryClass {
     }
 
     private String getterHelper(String s, String operator){
-        String query = "Ingredients LIKE '";
+        String query = "Ingredients LIKE '%";
         query = query + s;
-        query = query + "'";
-        query = query + operator;
-        if(s.equals(""))
-            query = "";
+        query = query + "' ";
+        query = query + operator + " " ;
+        if(s != null)
+            if(s.isEmpty())
+                query = "";
+        if(s == null)
+                query = "";
         return query;
     }
 }

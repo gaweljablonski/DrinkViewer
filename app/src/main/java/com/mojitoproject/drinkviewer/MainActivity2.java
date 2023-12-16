@@ -1,5 +1,7 @@
 package com.mojitoproject.drinkviewer;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -45,7 +48,7 @@ public class MainActivity2 extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showButtonFun();
+                createQuery();
             }
         });
 
@@ -61,21 +64,32 @@ public class MainActivity2 extends AppCompatActivity {
 
         restET = (EditText) findViewById(R.id.restET);
 
-        // Wyświetla informacje pobrane z DB
         displayJson();
         
     }
-    public void showButtonFunFromPop() {
-        displayJson();
-    }
 
-    public void setQueryClassFromFilters(QueryClass qs){
-        queryClass = qs;
-    }
-    private void showButtonFun() {
+    // tworzy zapytanie z pola wyszukiwania i filtrów
+    private void createQuery() {
+        // odbiera obiekt queryClass z FiltersPop
+        QueryClass queryClass2 = (QueryClass) getIntent().getSerializableExtra("Filters");
+        if(queryClass2 != null)
+            queryClass = queryClass2;
         query = "WHERE Name = '";
         query = query + restET.getText().toString();
         query = query + "' AND ";
+
+        // if'ujemy przypadek wyszukiwania spacji
+        String tmp = restET.getText().toString();
+        boolean czy = true;
+        for(int i = 0; i < tmp.length(); i++)
+        {
+            if(tmp.charAt(i) != ' ')
+            {
+                czy = false;
+            }
+        }
+        if(czy)
+            query = "";
 
         query = query + queryClass.getWodka();
         query = query + queryClass.getGin();
@@ -88,6 +102,8 @@ public class MainActivity2 extends AppCompatActivity {
         query = query + queryClass.getJam();
 
         query = query + " percentage like '%%'";
+
+//        query = "where Ingredients LIKE '%rum%'";
 
         // Check if no view has focus:
         // Hide Keyboard
@@ -105,6 +121,21 @@ public class MainActivity2 extends AppCompatActivity {
         displayJson();
     }
 
+    // po zamknięciu filtrów
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) {
+            Log.e(TAG, "focus changed" + queryClass.getRum());
+            createQuery();
+            displayJson();
+
+        }
+    }
+
+
+    // wyświetla zapytanie w MA2
+    // pobrane z DB
     private void displayJson() {
         // use retrofit for http request
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseUrl)
@@ -114,6 +145,8 @@ public class MainActivity2 extends AppCompatActivity {
 
         //query -> dodatek do zapytania SQL (które można wykorzystać jako sortowanie, filtrowanie etc.)
 //        query = "";
+
+        Log.e(TAG, "[DISPLAY JSON]" + query);
 
         Call<ArrayList<ModelClass>> arrayListCall = myApi.fetchData(query);
         arrayListCall.enqueue(new Callback<ArrayList<ModelClass>>() {
