@@ -24,7 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity implements FiltersPop.OnSubmitListener {
 
     private MyApi myApi;
     private MyAdapter myAdapter;
@@ -34,8 +34,12 @@ public class MainActivity2 extends AppCompatActivity {
     private String query = "";
     private Button show, filters;
     private EditText restET;
-    private QueryClass queryClass = new QueryClass("", "", "", "", "", "", "", "", "");
 
+    ArrayList<String> alcoholsArary = new ArrayList<String>();
+    ArrayList<String> ingrediencesArray = new ArrayList<String>();
+
+    Context context;
+    FiltersPop popup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +52,19 @@ public class MainActivity2 extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createQuery();
+                displayJson();
             }
         });
 
         // Działanie Buttona FILTERS w MA2
         filters = (Button) findViewById(R.id.filters);
+        // otwiera popup filtrów
+        context = this;
+        popup = new FiltersPop(context, this);
         filters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity2.this, FiltersPop.class);
-                startActivity(intent);
+                popup.show(v);
             }
         });
 
@@ -70,40 +76,57 @@ public class MainActivity2 extends AppCompatActivity {
 
     // tworzy zapytanie z pola wyszukiwania i filtrów
     private void createQuery() {
-        // odbiera obiekt queryClass z FiltersPop
-        QueryClass queryClass2 = (QueryClass) getIntent().getSerializableExtra("Filters");
-        if(queryClass2 != null)
-            queryClass = queryClass2;
-        query = "WHERE Name = '";
-        query = query + restET.getText().toString();
-        query = query + "' AND ";
+        final String onlyWhere = "where ";
+        final String nameFromET = deleteSpace(restET.getText().toString());
+        query = "where ";
 
-        // if'ujemy przypadek wyszukiwania spacji
-        String tmp = restET.getText().toString();
-        boolean czy = true;
-        for(int i = 0; i < tmp.length(); i++)
-        {
-            if(tmp.charAt(i) != ' ')
-            {
-                czy = false;
-            }
+        // if'ujemy przypadek wyszukiwania spacji   &&   dobry OR między ()
+        // część wyszukiwania: nazwa
+
+        if(!nameFromET.equals("")){
+            query = query + "Name like '%";
+            query = query + nameFromET;
+            query = query + "%'";
+
+            if(alcoholsArary.size() > 0 || ingrediencesArray.size() > 0)
+                query = query + " OR ";
         }
-        if(czy)
+
+        // część wyszukiwania: alkochole
+        if(alcoholsArary.size() > 0)
+        {
+            query = query + "(";
+            for(int i = 0; i < alcoholsArary.size()-1; i++)
+            {
+                query = query + "Ingredients LIKE '%";
+                query = query + alcoholsArary.get(i);
+                query = query + "' OR ";
+            }
+            query = query + "Ingredients LIKE '%";
+            query = query + alcoholsArary.get(alcoholsArary.size()-1);
+            query = query + "')";
+            if(ingrediencesArray.size() > 0)
+                query = query +  " OR ";
+        }
+
+
+        // część wyszukiwania: reszta składników tj. owocki, cukier, jam etc.
+        if(ingrediencesArray.size() > 0)
+        {
+            query = query + "(";
+            for(int i = 0; i < ingrediencesArray.size()-1; i++)
+            {
+                query = query + "Ingredients LIKE '%";
+                query = query + ingrediencesArray.get(i);
+                query = query + "' AND ";
+            }
+            query = query + "Ingredients LIKE '%";
+            query = query + ingrediencesArray.get(ingrediencesArray.size()-1);
+            query = query + "')";
+        }
+
+        if(query.equals(onlyWhere))
             query = "";
-
-        query = query + queryClass.getWodka();
-        query = query + queryClass.getGin();
-        query = query + queryClass.getRum();
-        query = query + queryClass.getTequila();
-        query = query + queryClass.getMetaxa();
-        query = query + queryClass.getCukier();
-        query = query + queryClass.getCytryny();
-        query = query + queryClass.getLimonki();
-        query = query + queryClass.getJam();
-
-        query = query + " percentage like '%%'";
-
-//        query = "where Ingredients LIKE '%rum%'";
 
         // Check if no view has focus:
         // Hide Keyboard
@@ -116,27 +139,13 @@ public class MainActivity2 extends AppCompatActivity {
         } catch (Exception e) {
 //            throw new RuntimeException(e);
         }
-
-        Toast.makeText(MainActivity2.this, query, Toast.LENGTH_LONG).show();
-        displayJson();
     }
-
-    // po zamknięciu filtrów
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if(hasFocus) {
-            Log.e(TAG, "focus changed" + queryClass.getRum());
-            createQuery();
-            displayJson();
-
-        }
-    }
-
 
     // wyświetla zapytanie w MA2
     // pobrane z DB
+    // z dodakiem do zapytania 'query'
     private void displayJson() {
+        createQuery();
         // use retrofit for http request
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -146,8 +155,9 @@ public class MainActivity2 extends AppCompatActivity {
         //query -> dodatek do zapytania SQL (które można wykorzystać jako sortowanie, filtrowanie etc.)
 //        query = "";
 
-        Log.e(TAG, "[DISPLAY JSON]" + query);
+        Log.e("[DISPLAY JSON]", query);
 
+        // TODO: zrozumieć następne 21 linijek  :)
         Call<ArrayList<ModelClass>> arrayListCall = myApi.fetchData(query);
         arrayListCall.enqueue(new Callback<ArrayList<ModelClass>>() {
             @Override
@@ -169,5 +179,32 @@ public class MainActivity2 extends AppCompatActivity {
                 Toast.makeText(MainActivity2.this, "Failed to load", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // funkcja wywoływana po naciśnięciu SAVE w popup_window (czyli po zamknięciu)
+    @Override
+    public void valueChanged(ArrayList<String> alcoholsArary, ArrayList<String> ingrediencesArray) {
+        this.alcoholsArary = alcoholsArary;
+        this.ingrediencesArray = ingrediencesArray;
+//        Log.e("ALKO", this.alcoholsArary.get(0));
+        Log.e("PASSED THE ARRAYS FORM FILTERS", "SUCCES");
+
+        displayJson();
+    }
+
+    // usuwa spacje wiodące z pola wyszukiwania
+    private String deleteSpace(String s) {
+        String outt = "";
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == ' '){
+                continue;
+            }
+            for(int j = i; j < s.length(); j++){
+                outt = outt + s.charAt(j);
+            }
+            break;
+        }
+
+        return outt;
     }
 }

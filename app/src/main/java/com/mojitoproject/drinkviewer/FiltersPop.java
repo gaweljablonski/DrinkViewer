@@ -1,253 +1,137 @@
 package com.mojitoproject.drinkviewer;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.PopupWindow;
 
-import androidx.annotation.Nullable;
+import java.util.ArrayList;
 
-import retrofit2.http.Tag;
+public class FiltersPop extends PopupWindow {
+    Context context;
 
-public class FiltersPop extends Activity {
+    String[] listOfAlcohols = new String[]{"wodk%", "gin%", "rum%", "caffe%", "metax%"};
+    String[] listOfIngrediences = new String[]{"cuk%", "cytryn%", "limon%", "dżem%"};
 
-    private int width, height;
+    final private int numberOfAlcohols = listOfAlcohols.length;
+    final private int numberOfIngrediences = listOfIngrediences.length;
+    private CheckBox[] alcoholsAraryCB = new CheckBox[numberOfAlcohols];
+    private CheckBox[] ingrediencesArrayCB = new CheckBox[numberOfIngrediences];
 
-    private CheckBox wodkaCB, ginCB, rumCB, tequilaCB, metaxaCB;
-    private CheckBox cukierCB, cytrynyCB, limonkiCB, jamCB;
+    ArrayList<String> alcoholsArary = new ArrayList<String>();
+    ArrayList<String> ingrediencesArray = new ArrayList<String>();
 
-    private String wodka, gin, rum, tequila, metaxa;
-    private String cukier, cytryny, limonki, jam;
+    private int dx;
+    private int dy;
+    private OnSubmitListener mListener;
 
-    private static boolean isWodka = false, isGin = false, isRum = false, isTequila = false, isMetaxa = false;
-    private static boolean isCukier = false, isCytryny = false, isLimonki = false, isJam = false;
     private Button okB, clearB;
-    private QueryClass queryClass;
-    private MainActivity2 mainActivity2 = new MainActivity2();
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.filters_pop_window);
 
-        // ustawia rozmiary filters_pop_window (popup window)
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        width = displayMetrics.widthPixels;
-        height = displayMetrics.heightPixels;
-        getWindow().setLayout((int)(width*0.95), (int)(height*0.4));
+    public FiltersPop(Context context, OnSubmitListener listener){
+        super(context);
+        this.context = context;
+        mListener = listener;
 
-        checkBoxesSetup();
+        setContentView(LayoutInflater.from(context).inflate(R.layout.filters_pop_window, null));
+//        setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+//        setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        View popupView = getContentView();
+        setFocusable(true);
 
-        okB = findViewById(R.id.searchB);
-        clearB = findViewById(R.id.clearB);
+        okB = (Button) popupView.findViewById(R.id.searchB);
+        clearB = (Button) popupView.findViewById(R.id.clearB);
 
-        // OK button w filters
+        alcoholsAraryCB[0] = (CheckBox) popupView.findViewById(R.id.wodkaCB);
+        alcoholsAraryCB[1] = (CheckBox) popupView.findViewById(R.id.ginCB);
+        alcoholsAraryCB[2] = (CheckBox) popupView.findViewById(R.id.rumCB);
+        alcoholsAraryCB[3] = (CheckBox) popupView.findViewById(R.id.tequilaCB);
+        alcoholsAraryCB[4] = (CheckBox) popupView.findViewById(R.id.metaxaCB);
+
+        ingrediencesArrayCB[0] = (CheckBox) popupView.findViewById(R.id.cukierCB);
+        ingrediencesArrayCB[1] = (CheckBox) popupView.findViewById(R.id.cytrynyCB);
+        ingrediencesArrayCB[2] = (CheckBox) popupView.findViewById(R.id.limonkiCB);
+        ingrediencesArrayCB[3] = (CheckBox) popupView.findViewById(R.id.jamCB);
+
         okB.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "OK button clicked");
-                onClickOKButtonFun();
+                alcoholsArary.clear();
+                ingrediencesArray.clear();
+                for(int i = 0; i < numberOfAlcohols; i++)
+                {
+                    if(alcoholsAraryCB[i].isChecked())
+                        alcoholsArary.add(listOfAlcohols[i]);
+
+                }
+                for(int i = 0; i < numberOfIngrediences; i++)
+                {
+                    if(ingrediencesArrayCB[i].isChecked())
+                        ingrediencesArray.add(listOfIngrediences[i]);
+
+                }
+                Log.e("ALKO2", String.valueOf(alcoholsArary.size()));
+                mListener.valueChanged(alcoholsArary, ingrediencesArray);
+                dismiss();
             }
         });
-
-        // reset button -> ustawia deafut'owe wartości CeckBox'ów (false/0)
         clearB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wodka = "";
-                gin = "";
-                rum = "";
-                tequila = "";
-                metaxa = "";
-                cukier = "";
-                cytryny = "";
-                limonki = "";
-                jam = "";
-                wodkaCB.setChecked(false);
-                ginCB.setChecked(false);
-                rumCB.setChecked(false);
-                tequilaCB.setChecked(false);
-                metaxaCB.setChecked(false);
-                cukierCB.setChecked(false);
-                cytrynyCB.setChecked(false);
-                limonkiCB.setChecked(false);
-                jamCB.setChecked(false);
+                for(int i = 0; i < numberOfAlcohols; i++)
+                {
+                    alcoholsAraryCB[i].setChecked(false);
+                }
+                for(int i = 0; i < numberOfIngrediences; i++)
+                {
+                    ingrediencesArrayCB[i].setChecked(false);
+                }
+//                dismiss();
             }
         });
 
-        wodkaCB = findViewById(R.id.wodkaCB);
-        ginCB = findViewById(R.id.ginCB);
-        rumCB = findViewById(R.id.rumCB);
-        tequilaCB = findViewById(R.id.tequilaCB);
-        metaxaCB = findViewById(R.id.metaxaCB);
+        // przesuwa okno
+        // setOnTouchListener is to add drag and drop the popup window.
+        // If you didn't want, you can remove it.
+                popupView.setOnTouchListener(new View.OnTouchListener() {
 
-        cukierCB = findViewById(R.id.cukierCB);
-        cytrynyCB = findViewById(R.id.cytrynyCB);
-        limonkiCB = findViewById(R.id.limonkiCB);
-        jamCB = findViewById(R.id.jamCB);
+                    public boolean onTouch(View arg0, MotionEvent motionEvent) {
+                        switch (motionEvent.getAction()) {
 
-/*
-        wodkaCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    wodka = "wodka";
-                }
-                else{
-                    wodka = "";
-                }
-            }
-        });
+                            case MotionEvent.ACTION_DOWN:
+                                dx = (int) motionEvent.getRawX();
+                                dy = (int) motionEvent.getRawY();
+                                break;
 
-        ginCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    gin = "gin";
-                }
-                else{
-                    gin = "";
-                }
-            }
-        });
-        rumCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    rum = "rum";
-                }
-                else{
-                    rum = "";
-                }
-            }
-        });
-        tequilaCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    tequila = "tequila";
-                }
-                else{
-                    tequila = "";
-                }
-            }
-        });
-        metaxaCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    metaxa = "metaxa";
-                }
-                else{
-                    metaxa = "";
-                }
-            }
-        });
-        cukierCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    cukier = "syrop cukrowy";
-                }
-                else{
-                    cukier = "";
-                }
-            }
-        });
-        cytrynyCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    cytryny = "cytryny";
-                }
-                else{
-                    cytryny = "";
-                }
-            }
-        });
-        limonkiCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    limonki = "limonki";
-                }
-                else{
-                    limonki = "";
-                }
-            }
-        });
-        jamCB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(jamCB.isChecked()){
-                    jam = "dżem";
-                }
-                else{
-                    jam = "";
-                }
-            }
-        });
-*/
+                            case MotionEvent.ACTION_MOVE:
+                                int x = (int) motionEvent.getRawX();
+                                int y = (int) motionEvent.getRawY();
+                                int left = (x - dx);
+                                int top = (y - dy);
+                                update(left, top, -1, -1);
+                                break;
+                        }
+                        return true;
+                    }
+                });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e(TAG, "on Destroy");
+
+    public void show(View v) {
+        showAtLocation(v, Gravity.CENTER, 0, 0);
+//        Log.e("JAJA", "moje");
     }
-
-    private void onClickOKButtonFun() {
-        if(wodkaCB.isChecked()) isWodka=true;
-        if(ginCB.isChecked()) isGin=true;
-        if(rumCB.isChecked()) isRum=true;
-        if(tequilaCB.isChecked()) isTequila=true;
-        if(metaxaCB.isChecked()) isMetaxa=true;
-        if(cukierCB.isChecked()) isCukier=true;
-        if(cytrynyCB.isChecked()) isCytryny=true;
-        if(limonkiCB.isChecked()) isLimonki=true;
-        if(jamCB.isChecked()) isJam=true;
-
-        if(isWodka) wodka = "wódk%";
-        if(isGin) gin = "gin%";
-        if(isRum) rum = "rum%";
-        if(isTequila) tequila = "tequil%";
-        if(isMetaxa) metaxa = "matax%";
-        if(isCukier) cukier = "cukr%";
-        if(isCytryny) cytryny = "cytryn%";
-        if(isLimonki) limonki = "limonk%";
-        if(isJam) jam = "dżem%";
-
-        Log.e(TAG, "[RUM]: " + rum);
-
-        queryClass = new QueryClass(wodka, gin, rum, tequila, metaxa, cukier, cytryny, limonki, jam);
-
-        // przekazuje obiekt queryClass do MA2
-        Intent intent = new Intent(this, MainActivity2.class);
-        intent.putExtra("Filters", queryClass);
-        startActivity(intent);
-
-        this.finish();
-    }
-
-    private void checkBoxesSetup(){
-        if(isWodka) wodkaCB.setChecked(true);
-        if(isGin) ginCB.setChecked(true);
-        if(isRum) rumCB.setChecked(true);
-        if(isTequila) tequilaCB.setChecked(true);
-        if(isMetaxa) metaxaCB.setChecked(true);
-        if(isCukier) cukierCB.setChecked(true);
-        if(isCytryny) cytrynyCB.setChecked(true);
-        if(isLimonki) limonkiCB.setChecked(true);
-        if(isJam) jamCB.setChecked(true);
+    public interface OnSubmitListener {
+        void valueChanged(ArrayList<String> alcoholsArary, ArrayList<String> ingrediencesArray);
     }
 }

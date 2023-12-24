@@ -17,7 +17,7 @@
             android:name=".MainActivity2"
             android:exported="false" />
         <activity
-            android:name=".FiltersPop"
+            android:name=".FiltersPop_stare"
             android:theme="@style/AppTheme.FiltersPopWindow"
             android:exported="false" />
         <activity
