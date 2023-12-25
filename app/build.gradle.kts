@@ -11,7 +11,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,6 +43,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui:2.7.5")
 
     implementation(files("libs\\mariadb-java-client-3.2.0.jar"))
+    androidTestImplementation(files("D:\\MOJITO PROJECT\\DRINECZKI\\app\\libs\\mysql-connector-j-8.1.0.jar"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
