@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+// TODO: zrozumieć to => nie mam pojęcia co się dzieje ale działa
+// tak serio to rozumiem tak 21/37
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ArrayList<ModelClass> arrayList;
     private Context context;
@@ -39,7 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.IngredientsT.setText("skladniki:\n"+modelClass.getIngredients());
             holder.PercentageT.setText("%:"+modelClass.getPercentage());
         } catch (Exception e) {
-//            throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
