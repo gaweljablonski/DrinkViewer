@@ -23,7 +23,6 @@ public class Insert extends AppCompatActivity {
     private MyApi myApi;
     private String BaseUrl = "https://mojitoproject.000webhostapp.com/connection_ftp/";
 
-    private TextView nameTV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

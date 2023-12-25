@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.insertData.InsertDataFragment">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Insert">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Name"
+            android:fontFamily="sans-serif"
+            android:textSize="24dp"
+            android:layout_margin="10dp"
+            android:hint="Name"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Description"
+            android:fontFamily="sans-serif"
+            android:textSize="24dp"
+            android:layout_margin="10dp"
+            android:hint="Description"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Ingredients"
+            android:fontFamily="sans-serif"
+            android:textSize="24dp"
+            android:layout_margin="10dp"
+            android:hint="Ingredients"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Percentage"
+            android:fontFamily="sans-serif"
+            android:textSize="24dp"
+            android:layout_margin="10dp"
+            android:hint="Percentage"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add"
+            android:layout_margin="10dp"
+            android:text="SUMMIT"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view"
+            android:layout_margin="10dp"
+            android:text="View Data"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
