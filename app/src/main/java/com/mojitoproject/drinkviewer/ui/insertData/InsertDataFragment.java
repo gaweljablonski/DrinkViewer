@@ -11,9 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.mojitoproject.sidebar.ModelClass;
-import com.mojitoproject.sidebar.MyApi;
-import com.mojitoproject.sidebar.databinding.FragmentInsertDataBinding;
+import com.mojitoproject.drinkviewer.ModelClass;
+import com.mojitoproject.drinkviewer.MyApi;
+import com.mojitoproject.drinkviewer.databinding.FragmentInsertDataBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,7 +71,7 @@ public class InsertDataFragment extends Fragment{
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             myApi = retrofit.create(MyApi.class);
-            Call<ModelClass> modelClassCall = myApi.insertData(name, description, ingredients, percentage);
+            Call<ModelClass> modelClassCall = myApi.insertData(name, description, ingredients, percentage, "Drineczki");
 
             modelClassCall.enqueue(new Callback<ModelClass>() {
                 @Override
@@ -92,5 +92,10 @@ public class InsertDataFragment extends Fragment{
 //            throw new RuntimeException(e);
             Toast.makeText(getActivity(), "Data not correct", Toast.LENGTH_SHORT).show();
         }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

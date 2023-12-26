@@ -1,4 +1,4 @@
-package com.mojitoproject.drinkviewer;
+package com.mojitoproject.drinkviewer.ui.viewData;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,8 +9,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.PopupWindow;
+
+import com.mojitoproject.drinkviewer.R;
 
 import java.util.ArrayList;
 

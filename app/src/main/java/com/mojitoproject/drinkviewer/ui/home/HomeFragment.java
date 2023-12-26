@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.mojitoproject.sidebar.databinding.FragmentHomeBinding;
+import com.mojitoproject.drinkviewer.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 

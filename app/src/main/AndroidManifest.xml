@@ -13,15 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DrinkViewer"
         tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".FiltersPop_stare"
-            android:theme="@style/AppTheme.FiltersPopWindow"
-            android:exported="false" />
-        <activity
-            android:name=".Insert"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
