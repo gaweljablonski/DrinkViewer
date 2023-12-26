@@ -4,6 +4,16 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
+<!--        kolejność inna niż w navigation/mobile_nawigation-->
+        <item
+            android:id="@+id/nav_view_data"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_view_data" />
+        <item
+            android:id="@+id/nav_insert_data"
+            android:icon="@drawable/side_nav_bar"
+            android:title="@string/menu_insert_data" />
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
@@ -16,13 +26,7 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
-        <item
-            android:id="@+id/nav_insert_data"
-            android:icon="@drawable/side_nav_bar"
-            android:title="@string/menu_insert_data" />
-        <item
-            android:id="@+id/nav_view_data"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_view_data" />
+
+
     </group>
 </menu>

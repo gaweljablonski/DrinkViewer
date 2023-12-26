@@ -41,16 +41,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="FILTERS" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/elementCounter"
+                android:textSize="15dp"
+                android:layout_margin="15dp"/>
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/elementCounter"
-            android:textSize="15dp"
-            android:layout_margin="15dp"/>
-
 
 
         <androidx.recyclerview.widget.RecyclerView

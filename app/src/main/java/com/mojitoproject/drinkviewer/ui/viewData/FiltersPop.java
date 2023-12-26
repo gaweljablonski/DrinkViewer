@@ -104,6 +104,8 @@ public class FiltersPop extends PopupWindow {
         // przesuwa okno
         // setOnTouchListener is to add drag and drop the popup window.
         // If you didn't want, you can remove it.
+
+        /*
                 popupView.setOnTouchListener(new View.OnTouchListener() {
 
                     public boolean onTouch(View arg0, MotionEvent motionEvent) {
@@ -125,12 +127,12 @@ public class FiltersPop extends PopupWindow {
                         return true;
                     }
                 });
+        */
     }
 
 
     public void show(View v) {
         showAtLocation(v, Gravity.CENTER, 0, 0);
-//        Log.e("JAJA", "moje");
     }
     public interface OnSubmitListener {
         void valueChanged(ArrayList<String> alcoholsArary, ArrayList<String> ingrediencesArray);
