@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:theme="@style/AppTheme.FiltersPopWindow"
 
-    tools:context=".FiltersPop_stare">
+    tools:context=".ui.viewData.FiltersPop">
 
     <RelativeLayout
         android:id="@+id/alcochols"

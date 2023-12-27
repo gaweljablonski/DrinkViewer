@@ -3,6 +3,7 @@ package com.mojitoproject.drinkviewer.ui.viewData;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,6 +76,9 @@ public class ViewDataFragment extends Fragment implements FiltersPop.OnSubmitLis
         filters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myHideKeyboard();
+                popup.setBackgroundDrawable(new ColorDrawable(
+                        android.graphics.Color.TRANSPARENT));
                 popup.show(v);
             }
         });
@@ -194,18 +198,7 @@ public class ViewDataFragment extends Fragment implements FiltersPop.OnSubmitLis
                 Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT).show();
             }
         });
-
-        // Check if no view has focus:
-        // Hide Keyboard
-        try {
-            View view = getActivity().getCurrentFocus();
-            if (view != null) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-        } catch (Exception e) {
-//            throw new RuntimeException(e);
-        }
+        myHideKeyboard();
     }
 
     // funkcja wywoływana po naciśnięciu SAVE w popup_window (czyli po zamknięciu)
@@ -233,5 +226,18 @@ public class ViewDataFragment extends Fragment implements FiltersPop.OnSubmitLis
         }
 
         return outt;
+    }
+    private void myHideKeyboard() {
+        // Check if no view has focus:
+        // Hide Keyboard
+        try {
+            View view = getActivity().getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        } catch (Exception e) {
+//            throw new RuntimeException(e);
+        }
     }
 }

@@ -32,4 +32,11 @@
         android:name="com.mojitoproject.drinkviewer.ui.viewData.ViewDataFragment"
         android:label="@string/menu_view_data"
         tools:layout="@layout/fragment_view_data" />
+
+
+    <fragment
+        android:id="@+id/btn_favorite_list"
+        android:name="com.mojitoproject.drinkviewer.ui.viewData.ViewDataFragment"
+        android:label="@string/menu_view_data"
+        tools:layout="@layout/fragment_favorite_list" />
 </navigation>

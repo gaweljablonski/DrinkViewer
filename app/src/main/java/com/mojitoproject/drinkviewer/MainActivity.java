@@ -1,12 +1,15 @@
 package com.mojitoproject.drinkviewer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,11 +18,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mojitoproject.drinkviewer.databinding.ActivityMainBinding;
+import com.mojitoproject.drinkviewer.ui.favoriteList.FavoriteListFragment;
+import com.mojitoproject.drinkviewer.ui.home.HomeFragment;
+import com.mojitoproject.drinkviewer.ui.viewData.ViewDataFragment;
+
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+
+    public static int favoriteListOpensCounter = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +38,42 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                if(favoriteListOpensCounter == -1){
+                    favoriteListOpensCounter *= -1;
+                    Log.e("COUNTER", "onClick: " + favoriteListOpensCounter);
+                    getSupportFragmentManager().beginTransaction().add(R.id.content_main_layout, new FavoriteListFragment()).setReorderingAllowed(true).addToBackStack("name").commit();
+                }
+                else{
+                    favoriteListOpensCounter *= -1;
+                    Log.e("COUNTER", "on_UN_Click: " + favoriteListOpensCounter);
+                    getSupportFragmentManager().beginTransaction().hide(new FavoriteListFragment()).setReorderingAllowed(true).addToBackStack("name").commit();
+
+//                    onBackPressed();
+                }
+
             }
         });
+        DrawerLayout drawer = binding.drawerLayout;
+        NavigationView navigationView = binding.navView;
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_insert_data, R.id.nav_view_data)
+                .setOpenableLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    private void setUpBar(){
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -61,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 }
