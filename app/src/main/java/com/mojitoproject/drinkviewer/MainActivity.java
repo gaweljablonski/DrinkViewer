@@ -45,17 +45,28 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                if(favoriteListOpensCounter == -1){
+//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//                startActivity(intent);
+
+                if(favoriteListOpensCounter == -1 || true){
                     favoriteListOpensCounter *= -1;
                     Log.e("COUNTER", "onClick: " + favoriteListOpensCounter);
-                    getSupportFragmentManager().beginTransaction().add(R.id.content_main_layout, new FavoriteListFragment()).setReorderingAllowed(true).addToBackStack("name").commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment_content_main, new FavoriteListFragment()).setReorderingAllowed(true).addToBackStack("name").commit();
                 }
                 else{
                     favoriteListOpensCounter *= -1;
                     Log.e("COUNTER", "on_UN_Click: " + favoriteListOpensCounter);
-                    getSupportFragmentManager().beginTransaction().hide(new FavoriteListFragment()).setReorderingAllowed(true).addToBackStack("name").commit();
-
-//                    onBackPressed();
+//                    getSupportFragmentManager().beginTransaction().hide(R.id.nav_host_fragment_content_main, new HomeFragment()).setReorderingAllowed(true).addToBackStack("name").commit();
+//
+//                    DrawerLayout drawer = binding.drawerLayout;
+//                    NavigationView navigationView = binding.navView;
+//                    // Passing each menu ID as a set of Ids because each
+//                    // menu should be considered as top level destinations.
+//                    mAppBarConfiguration = new AppBarConfiguration.Builder(
+//                            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_insert_data, R.id.nav_view_data)
+//                            .setOpenableLayout(drawer)
+//                            .build();
+                    onBackPressed();
                 }
 
             }
@@ -73,18 +84,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    private void setUpBar(){
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_insert_data, R.id.nav_view_data)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
