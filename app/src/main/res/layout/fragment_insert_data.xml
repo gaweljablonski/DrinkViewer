@@ -44,11 +44,11 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Percentage"
+            android:id="@+id/Vibe"
             android:fontFamily="sans-serif"
             android:textSize="24dp"
             android:layout_margin="10dp"
-            android:hint="Percentage"/>
+            android:hint="Vibe"/>
 
         <Button
             android:layout_width="match_parent"

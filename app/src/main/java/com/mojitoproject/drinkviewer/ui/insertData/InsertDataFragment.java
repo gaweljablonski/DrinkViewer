@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class InsertDataFragment extends Fragment{
     private FragmentInsertDataBinding binding;
 
-    private EditText NameET, DescriptionET, IngredientsET, PercentageET;
+    private EditText NameET, DescriptionET, IngredientsET, VibeET;
     private Button add, viewdata;
     private MyApi myApi;
     private String BaseUrl = "https://mojitoproject.000webhostapp.com/connection_ftp/";
@@ -38,7 +38,7 @@ public class InsertDataFragment extends Fragment{
         NameET = binding.Name;
         DescriptionET = binding.Description;
         IngredientsET = binding.Ingredients;
-        PercentageET = binding.Ingredients;
+        VibeET = binding.Ingredients;
         add = binding.add;
         viewdata = binding.view;
 
@@ -57,13 +57,14 @@ public class InsertDataFragment extends Fragment{
         String name = NameET.getText().toString();
         String description = DescriptionET.getText().toString();
         String ingredients = IngredientsET.getText().toString();
-        try {
-            percentage = Integer.parseInt(PercentageET.getText().toString());
-        } catch (NumberFormatException e) {
-//            throw new RuntimeException(e);
-            Toast.makeText(getActivity(), "Data not correct", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        String vibe = VibeET.getText().toString();
+//        try {
+//            percentage = Integer.parseInt(PercentageET.getText().toString());
+//        } catch (NumberFormatException e) {
+////            throw new RuntimeException(e);
+//            Toast.makeText(getActivity(), "Data not correct", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         try {
 
 
@@ -71,7 +72,7 @@ public class InsertDataFragment extends Fragment{
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             myApi = retrofit.create(MyApi.class);
-            Call<ModelClass> modelClassCall = myApi.insertData(name, description, ingredients, percentage, "Drineczki");
+            Call<ModelClass> modelClassCall = myApi.insertData(name, description, ingredients, vibe, "Drineczki");
 
             modelClassCall.enqueue(new Callback<ModelClass>() {
                 @Override
@@ -80,7 +81,7 @@ public class InsertDataFragment extends Fragment{
                     NameET.setText("");
                     DescriptionET.setText("");
                     IngredientsET.setText("");
-                    PercentageET.setText("");
+                    VibeET.setText("");
                 }
 
                 @Override

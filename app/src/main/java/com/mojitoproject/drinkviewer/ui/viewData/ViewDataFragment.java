@@ -97,7 +97,7 @@ public class ViewDataFragment extends Fragment implements FiltersPop.OnSubmitLis
     // tworzy zapytanie z pola wyszukiwania i filtrów
     private void createQuery() {
         final String onlyWhere = "where ";
-        final String nameFromET = deleteSpace(restET.getText().toString());
+        final String nameFromET = restET.getText().toString().trim();
         query = "where ";
 
         // if'ujemy przypadek wyszukiwania spacji   &&   dobry OR między ()
@@ -109,10 +109,10 @@ public class ViewDataFragment extends Fragment implements FiltersPop.OnSubmitLis
             query = query + "%'";
 
             if(alcoholsArary.size() > 0 || ingrediencesArray.size() > 0)
-                query = query + " OR ";
+                query = query + " AND ";
         }
 
-        // część wyszukiwania: alkochole
+        // część wyszukiwania: alkohole
         if(alcoholsArary.size() > 0)
         {
             query = query + "(";
@@ -120,13 +120,13 @@ public class ViewDataFragment extends Fragment implements FiltersPop.OnSubmitLis
             {
                 query = query + "Ingredients LIKE '%";
                 query = query + alcoholsArary.get(i);
-                query = query + "' OR ";
+                query = query + "' AND ";
             }
             query = query + "Ingredients LIKE '%";
             query = query + alcoholsArary.get(alcoholsArary.size()-1);
             query = query + "')";
             if(ingrediencesArray.size() > 0)
-                query = query +  " OR ";
+                query = query +  " AND ";
         }
 
 
@@ -212,21 +212,6 @@ public class ViewDataFragment extends Fragment implements FiltersPop.OnSubmitLis
         displayJson();
     }
 
-    // usuwa spacje wiodące z pola wyszukiwania
-    private String deleteSpace(String s) {
-        String outt = "";
-        for(int i = 0; i < s.length(); i++) {
-            if(s.charAt(i) == ' '){
-                continue;
-            }
-            for(int j = i; j < s.length(); j++){
-                outt = outt + s.charAt(j);
-            }
-            break;
-        }
-
-        return outt;
-    }
     private void myHideKeyboard() {
         // Check if no view has focus:
         // Hide Keyboard

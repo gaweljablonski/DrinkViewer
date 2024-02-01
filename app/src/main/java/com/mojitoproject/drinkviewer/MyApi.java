@@ -15,7 +15,7 @@ public interface MyApi {
             @Field("Name")String Name,
             @Field("Description")String Description,
             @Field("Ingredients")String Ingredients,
-            @Field("Percentage")int Percentage,
+            @Field("Vibe")String Vibe,
 
             @Field("tableName")String TableName
     );

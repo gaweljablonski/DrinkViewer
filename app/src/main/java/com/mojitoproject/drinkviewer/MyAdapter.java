@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,7 +38,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.NameT.setText("nazwa:"+modelClass.getName());
             holder.DescriptionT.setText("opis:\n"+modelClass.getDescription());
             holder.IngredientsT.setText("skladniki:\n"+modelClass.getIngredients());
-            holder.PercentageT.setText("%:"+modelClass.getPercentage());
+            holder.PercentageT.setText("Vibe:\n"+modelClass.getVibe());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             NameT = (TextView) view.findViewById(R.id.Name);
             DescriptionT = (TextView) view.findViewById(R.id.Description);
             IngredientsT = (TextView) view.findViewById(R.id.Ingredients);
-            PercentageT = (TextView) view.findViewById(R.id.Percentage);
+            PercentageT = (TextView) view.findViewById(R.id.Vibe);
         }
     }
 }

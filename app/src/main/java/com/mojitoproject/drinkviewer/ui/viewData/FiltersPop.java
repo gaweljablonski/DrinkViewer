@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class FiltersPop extends PopupWindow {
     Context context;
 
-    String[] listOfAlcohols = new String[]{"wodk%", "gin%", "rum%", "caffe%", "metax%"};
+    String[] listOfAlcohols = new String[]{"wódk%", "gin%", "rum%", "Aperol%", "metax%"};
     String[] listOfIngrediences = new String[]{"cuk%", "cytryn%", "limon%", "dżem%"};
 
     final private int numberOfAlcohols = listOfAlcohols.length;
@@ -55,7 +55,7 @@ public class FiltersPop extends PopupWindow {
         alcoholsAraryCB[0] = (CheckBox) popupView.findViewById(R.id.wodkaCB);
         alcoholsAraryCB[1] = (CheckBox) popupView.findViewById(R.id.ginCB);
         alcoholsAraryCB[2] = (CheckBox) popupView.findViewById(R.id.rumCB);
-        alcoholsAraryCB[3] = (CheckBox) popupView.findViewById(R.id.tequilaCB);
+        alcoholsAraryCB[3] = (CheckBox) popupView.findViewById(R.id.aperolCB);
         alcoholsAraryCB[4] = (CheckBox) popupView.findViewById(R.id.metaxaCB);
 
         ingrediencesArrayCB[0] = (CheckBox) popupView.findViewById(R.id.cukierCB);

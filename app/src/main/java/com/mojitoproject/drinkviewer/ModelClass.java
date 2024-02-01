@@ -1,12 +1,12 @@
 package com.mojitoproject.drinkviewer;
 
 public class ModelClass {
-    private int id, Percentage;
-    private String Name, Description, Ingredients;
+    private int id;
+    private String Name, Description, Ingredients, Vibe;
 
-    public ModelClass(int id, int percentage, String name, String description, String ingredients) {
+    public ModelClass(int id, String vibe, String name, String description, String ingredients) {
         this.id = id;
-        Percentage = percentage;
+        Vibe = vibe;
         Name = name;
         Description = description;
         Ingredients = ingredients;
@@ -20,12 +20,12 @@ public class ModelClass {
         this.id = id;
     }
 
-    public int getPercentage() {
-        return Percentage;
+    public String getVibe() {
+        return Vibe;
     }
 
-    public void setPercentage(int percentage) {
-        Percentage = percentage;
+    public void setPercentage(String vibe) {
+        Vibe = vibe;
     }
 
     public String getName() {
